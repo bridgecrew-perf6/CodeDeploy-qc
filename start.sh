@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /home/ubuntu/
+
 # First running the DB container
 echo "Starting Postgres Database Container"
 sudo docker run --net appmodz --name postgres_db -v qcloud-db:/var/lib/postgresql/data/ -p 5432:5432 --env-file /home/ubuntu/.env -t -d 456325780689.dkr.ecr.us-east-2.amazonaws.com/qcloud-postgres:latest

@@ -12,6 +12,9 @@ docker pull 456325780689.dkr.ecr.us-east-2.amazonaws.com/qcloud-pulumi:latest
 
 docker pull 456325780689.dkr.ecr.us-east-2.amazonaws.com/qcloud-frontend:latest
 
+docker volume rm qcloud-backend qcloud-db
+
+docker network rm appmodz
 
 docker volume create qcloud-db
 

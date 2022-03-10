@@ -36,5 +36,5 @@ sudo docker-compose up -d
 docker ps -a
 
 # This command is for PG restore that is to restore the data from dump/.bak file to the Postgres Database
-sudo docker exec -it postgres_db bash -c "pg_restore -h localhost -p 5432 -U exec_module -d exec_module -v /docker-entrypoint-initdb.d/latest3.bak"
+sudo docker exec -t postgres_db bash -c "pg_restore -h localhost -p 5432 -U exec_module -d exec_module -v /docker-entrypoint-initdb.d/latest3.bak"
 

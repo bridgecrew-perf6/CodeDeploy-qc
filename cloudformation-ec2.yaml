@@ -111,7 +111,7 @@ Resources:
           FromPort: '80'
           ToPort: '80'
           CidrIp: !Ref SSHLocation
-   InstanceHTTPsSecurityGroup:
+  InstanceHTTPsSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
       GroupDescription: Enable SSH access via port 22

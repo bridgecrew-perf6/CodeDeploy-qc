@@ -33,7 +33,7 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties: 
       
-      ImageId: !Ref 
+      ImageId: !Ref ImageID
       InstanceType: !Ref InstanceType
       KeyName: !Ref KeyName
       IamInstanceProfile: !Ref IAM

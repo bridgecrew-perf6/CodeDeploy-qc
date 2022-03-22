@@ -3,19 +3,19 @@ Parameters:
   KeyName:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
     Default: orange
-    Type: AWS::EC2::KeyPair::KeyName
+    Type: String
   IAM:
     Description: Name of the IAM role to be attached in this instance
     Default: ssp-custom-all
-    Type: AWS::IAM::InstanceProfile
+    Type: String
   SecurityGroup:
     Description: Id of the Security Group
     Default: sg-099b9caf0073e0a4e
-    Type: AWS::EC2::SecurityGroup
+    Type: String
   SubnetId:
     Description: The Subnet Id to be used
     Default: subnet-92a95fef
-    Type: AWS::EC2::Subnet::Id
+    Type: String
   InstanceType:
     Description: WebServer EC2 instance type
     Type: String

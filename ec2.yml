@@ -1,52 +1,18 @@
 AWSTemplateFormatVersion: 2010-09-09
-Parameters:
-  KeyName:
-    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
-    Default: orange
-    Type: String
-  IAM:
-    Description: Name of the IAM role to be attached in this instance
-    Default: ssp-custom-all
-    Type: String
-  SecurityGroup:
-    Description: Id of the Security Group
-    Default: sg-099b9caf0073e0a4e
-    Type: String
-  SubnetId:
-    Description: The Subnet Id to be used
-    Default: subnet-92a95fef
-    Type: String
-  InstanceType:
-    Description: WebServer EC2 instance type
-    Type: String
-    Default: t2.large
-    AllowedValues:
-      - t2.xlarge
-      - t2.large
-  ImageID:
-    Description: Ami Id of the instance
-    Default: ami-0fb653ca2d3203ac1
-    Type: String
 
 Resources:  
-  DemoInstance:
+  EC2Instance:
     Type: 'AWS::EC2::Instance'
     Properties: 
       
-      ImageId: 
-        Ref: ImageID
-      InstanceType: 
-        Ref: InstanceType
-      KeyName: 
-        Ref: KeyName
-      IamInstanceProfile: 
-        Ref: IAM
-      SecurityGroupIds: 
-        Ref: SecurityGroup
+      ImageId: ami-0fb653ca2d3203ac1
+      InstanceType: t2.large
+      KeyName: orange
+      IamInstanceProfile: ssp-custom-all
+      SecurityGroupIds: sg-099b9caf0073e0a4e
       AssociatePublicIpAddress: false
       DeleteOnTermination: true
-      SubnetId: 
-        Ref: SubnetId
+      SubnetId: subnet-92a95fef
       UserData:
         Fn::Base64: |
             #!/bin/bash

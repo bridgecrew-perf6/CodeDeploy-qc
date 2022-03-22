@@ -23,43 +23,17 @@ Parameters:
     AllowedValues:
       - t2.xlarge
       - t2.large
-  
-  Mapping:
-    AWSInstanceType2Arch:
-    
-    t2.xlarge:
-      Arch: HVM64
-    t2.large:
-      Arch: HVM64
-
-    AWSRegionArch2AMI:
-    us-east-1:
-      HVM64: ami-04505e74c0741db8d
-      HVMG2: NOT_SUPPORTED
-    us-west-2:
-      HVM64: ami-0892d3c7ee96c0bf7
-      HVMG2: NOT_SUPPORTED
-    us-west-1:
-      HVM64: ami-01f87c43e618bf8f0
-      HVMG2: NOT_SUPPORTED
-    us-east-2:
-      HVM64: ami-0fb653ca2d3203ac1
-      HVMG2: NOT_SUPPORTED
-  
-
+  ImageID:
+    Description: Ami Id of the instance
+    Default: ami-0fb653ca2d3203ac1
+    Type: String
 
 Resources:  
   DemoInstance:
     Type: 'AWS::EC2::Instance'
     Properties: 
       
-      ImageId: !FindInMap 
-        - AWSRegionArch2AMI
-        - !Ref 'AWS::Region'
-        - !FindInMap 
-          - AWSInstanceType2Arch
-          - !Ref InstanceType
-          - Arch
+      ImageId: !Ref 
       InstanceType: !Ref InstanceType
       KeyName: !Ref KeyName
       IamInstanceProfile: !Ref IAM

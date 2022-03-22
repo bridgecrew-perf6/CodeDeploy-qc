@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Default: orange
+    Type: AWS::EC2::KeyPair::KeyName
+  IAM:
+    Description: Name of the IAM role to be attached in this instance
+    Default: ssp-custom-all
+    Type: AWS::IAM::InstanceProfile
+  SecurityGroup:
+    Description: Id of the Security Group
+    Default: sg-099b9caf0073e0a4e
+    Type: AWS::EC2::SecurityGroup
+  SubnetId:
+    Description: The Subnet Id to be used
+    Default: subnet-92a95fef
+    Type: AWS::EC2::Subnet::Id
+  InstanceType:
+    Description: WebServer EC2 instance type
+    Type: String
+    Default: t2.large
+    AllowedValues:
+      - t2.xlarge
+      - t2.large
+  
+  Mapping:
+    AWSInstanceType2Arch:
+    
+    t2.xlarge:
+      Arch: HVM64
+    t2.large:
+      Arch: HVM64
+
+    AWSRegionArch2AMI:
+    us-east-1:
+      HVM64: ami-04505e74c0741db8d
+      HVMG2: NOT_SUPPORTED
+    us-west-2:
+      HVM64: ami-0892d3c7ee96c0bf7
+      HVMG2: NOT_SUPPORTED
+    us-west-1:
+      HVM64: ami-01f87c43e618bf8f0
+      HVMG2: NOT_SUPPORTED
+    us-east-2:
+      HVM64: ami-0fb653ca2d3203ac1
+      HVMG2: NOT_SUPPORTED
+  
+
+
+Resources:  
+  DemoInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties: 
+      
+      ImageId: !FindInMap 
+        - AWSRegionArch2AMI
+        - !Ref 'AWS::Region'
+        - !FindInMap 
+          - AWSInstanceType2Arch
+          - !Ref InstanceType
+          - Arch
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      IamInstanceProfile: !Ref IAM
+      SecurityGroupIds: 
+        - !Ref SecurityGroup
+      AssociatePublicIpAddress: false
+      DeleteOnTermination: true
+      SubnetId: !Ref SubnetId
+      UserData:
+        Fn::Base64: !Sub |
+            #!/bin/bash
+            sudo apt update
+            sudo apt upgrade -y
+            my_repo=$(aws ssm get-parameter --name "git_url_qc" --region us-east-2 --query 'Parameter.Value' --output text)
+            git clone $my_repo
+          
